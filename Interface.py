@@ -21,7 +21,7 @@ def main():
     parser = argparse.ArgumentParser(description="CRUD operations over a music DB")
     subparsers = parser.add_subparsers(help="Subcommands", dest="command")
 
-    # Subparser for the selecting the table to modify.
+    # Subparser for selecting the table to modify.
     create_parser = subparsers.add_parser('table', help='Select the working')
     create_parser.add_argument('--name', help='Name of the table', required=True)
 
@@ -44,6 +44,14 @@ def main():
     search_parser.add_argument('--album', help='Name of the album', default=None)
     search_parser.add_argument('--artist', help='Name of the artist', default=None)
    
+   # Subparser for the 'update' command
+    search_parser = subparsers.add_parser('update', help='Update a song/songs of the music db')
+    search_parser.add_argument('--song', help='Name of the song(condition)', default=None)
+    search_parser.add_argument('--album', help='Name of the album(condition)', default=None)
+    search_parser.add_argument('--artist', help='Name of the artist(condition)', default=None)
+    search_parser.add_argument('--set_song', help='Name of the song to set', default=None)
+    search_parser.add_argument('--set_album', help='Name of the album to set', default=None)
+    search_parser.add_argument('--set_artist', help='Name of the artist to set', default=None)
 
     args = parser.parse_args()
    
@@ -60,6 +68,8 @@ def main():
             search_song_by(song=args.song, album=args.album, artist=args.artist)
         case "delete":
             delete_song_by(song=args.song, album=args.album, artist=args.artist)
+        case "update":
+            update_song_by(set_song=args.set_song, set_album=args.set_album, set_artist=args.set_artist, song=args.song, album=args.album, artist=args.artist)
         case _:
             parser.print_help()
 

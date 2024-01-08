@@ -132,6 +132,21 @@ def update_song_by(kwargs):
             conditions = []
             values = []
 
+            if kwargs["set_song"]:
+                conditions.append("song_name = %s")
+                values.append(kwargs["set_song"])
+            if kwargs["set_album"]:
+                conditions.append("album_name = %s")
+                values.append(kwargs["set_album"])
+            if kwargs["set_artist"]:
+                conditions.append("artist_name = %s")
+                values.append(kwargs["set_artist"])
+
+            if conditions:
+                update_song += " " + " , ".join(conditions) 
+            
+            conditions = []
+
             if kwargs["song"]:
                 conditions.append("song_name = %s")
                 values.append(kwargs["song"])
@@ -141,11 +156,13 @@ def update_song_by(kwargs):
             if kwargs["artist"]:
                 conditions.append("artist_name = %s")
                 values.append(kwargs["artist"])
-
+            
             if conditions:
-                delete_song += " " + " AND ".join(conditions)
+                update_song += "WHERE" + " " + " AND ".join(conditions)    
 
-            cursor.execute(delete_song, tuple(values))
+            cursor.execute(update_song, tuple(values))
+            select_all_songs_query = "SELECT * FROM songs"
+            cursor.execute(select_all_songs_query)
         
             all_songs = cursor.fetchall()
             for song in all_songs:
