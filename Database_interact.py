@@ -1,5 +1,6 @@
 import pymysql
 
+
 # Requires a Mysql database
 # For example with:
 # docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=db -p 8001:3306 -d mysql:latest
