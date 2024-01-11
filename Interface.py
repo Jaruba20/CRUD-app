@@ -1,8 +1,12 @@
 import argparse
+
 import Database_interact as send
 
-def select_table(table_name):
-    send.select_table(table_name)
+def set_table(table_name):
+    send.set_table(table_name)
+
+def show_all():
+    send.show_all()
 
 def add_song_to_db(*args):
     send.add_song_to_db(args)
@@ -22,8 +26,11 @@ def main():
     subparsers = parser.add_subparsers(help="Subcommands", dest="command")
 
     # Subparser for selecting the table to modify.
-    create_parser = subparsers.add_parser('table', help='Select the working')
+    create_parser = subparsers.add_parser('set_table', help='Select the working table')
     create_parser.add_argument('--name', help='Name of the table', required=True)
+
+    # Subparser for showing the hole table.
+    create_parser = subparsers.add_parser('show_all', help='Show the hole table')
 
     # Subparser for the 'create' command
     create_parser = subparsers.add_parser('create', help='Add a song to the DB')
@@ -60,8 +67,10 @@ def main():
         #    login(user=args.user)
         #case "logout":
         #    logout()
-        case "table":
-            select_table(args.table_name)
+        case "set_table":
+            set_table(args.name)
+        case "show_all":
+            show_all()
         case "create":
             add_song_to_db(args.song, args.album, args.artist)
         case "search":
