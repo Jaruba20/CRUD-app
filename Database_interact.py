@@ -40,8 +40,8 @@ def set_table(name):
     
     print("Saved new working table")
 
-
 def interact(userQuery, userValues = None):
+    '''Executes the desired query in the database'''
     try:
         with connection.cursor() as cursor:
             
@@ -59,7 +59,6 @@ def interact(userQuery, userValues = None):
 
 def show_all():
     '''Shows the hole table'''
-
     show_table = f"""
         SELECT * FROM {get_table()}
         """
