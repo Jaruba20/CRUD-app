@@ -1,6 +1,6 @@
 import argparse
-
 import original_Database_interact as send
+
 
 def set_table(table_name):
     send.set_table(table_name)
@@ -12,7 +12,8 @@ def add_song_to_db(*args):
     send.add_song_to_db(args)
 
 def search_song_by(**kwargs):
-    send.search_song_by(kwargs)
+     send.search_song_by(kwargs)
+     
 
 def delete_song_by(**kwargs):
     send.delete_song_by(kwargs)

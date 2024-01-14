@@ -1,7 +1,8 @@
 import pymysql
 import configparser
+import pandas as pd
 
-cfg = "D:\mbd2324\LAB\crud_app\CRUD-app\.cfg"
+cfg = "original.cfg"
 config = configparser.ConfigParser()
 config.read(cfg)
 
@@ -48,10 +49,15 @@ def interact(userQuery, userValues = None):
             cursor.execute(userQuery, userValues)
 
             rows = cursor.fetchall()
-            for row in rows:
-                print(row)
-    
-        connection.commit()
+            #print(pd.DataFrame.from_dict(rows))
+            df = pd.DataFrame.from_dict(rows)
+            df.set_index("song_id", inplace=True)
+            print(df)
+
+            connection.commit()
+            
+            '''for row in rows:
+                print(row)'''
 
     finally:
             connection.close()
@@ -62,7 +68,7 @@ def show_all():
     show_table = f"""
         SELECT * FROM {get_table()}
         """
-    interact(show_table)
+    return interact(show_table)
         
 def add_song_to_db(args):
     '''Adds a song to the table'''
@@ -90,7 +96,7 @@ def search_song_by(kwargs):
     if conditions:
         search_song += " " + " AND ".join(conditions)
 
-    interact(search_song, values)
+    return interact(search_song, values)
 
 
 def delete_song_by(kwargs):
