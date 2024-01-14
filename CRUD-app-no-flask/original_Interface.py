@@ -1,6 +1,6 @@
 import argparse
 
-import Database_interact as send
+import original_Database_interact as send
 
 def set_table(table_name):
     send.set_table(table_name)

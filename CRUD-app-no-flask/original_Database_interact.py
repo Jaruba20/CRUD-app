@@ -1,7 +1,7 @@
 import pymysql
 import configparser
 
-cfg = ".cfg"
+cfg = "D:\mbd2324\LAB\crud_app\CRUD-app\.cfg"
 config = configparser.ConfigParser()
 config.read(cfg)
 

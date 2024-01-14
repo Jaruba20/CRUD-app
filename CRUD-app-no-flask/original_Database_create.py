@@ -31,9 +31,7 @@ try:
         CREATE TABLE IF NOT EXISTS songs (
             song_id INT PRIMARY KEY AUTO_INCREMENT,
             song_name VARCHAR(255),
-            album_id INT,
             album_name VARCHAR(255),
-            artist_id INT,
             artist_name VARCHAR(255)
         )
         """
@@ -41,15 +39,15 @@ try:
 
         # Example query: Insert a new song
         insert_songs_query = """
-        INSERT INTO songs (song_name, album_id, album_name, artist_id, artist_name)
-        VALUES ("cancion_1", 1, "album_1", 1, "artista_1"),
-               ("cancion_2", 1, "album_1", 1, "artista_1"),
-               ("cancion_3", 1, "album_1", 1, "artista_1"),
-               ("cancion_4", 1, "album_1", 1, "artista_1"),
-               ("cancion_5", 2, "album_2", 1, "artista_1"),
-               ("cancion_6", 2, "album_2", 1, "artista_1"),
-               ("cancion_7", 3, "album_3", 2, "artista_2"),
-               ("cancion_8", 3, "album_3", 2, "artista_2")
+        INSERT INTO songs (song_name, album_name, artist_name)
+        VALUES ("cancion_1","album_1","artista_1"),
+               ("cancion_2","album_1","artista_1"),
+               ("cancion_3","album_1","artista_1"),
+               ("cancion_4","album_1","artista_1"),
+               ("cancion_5","album_2","artista_1"),
+               ("cancion_6","album_2","artista_1"),
+               ("cancion_7","album_3","artista_2"),
+               ("cancion_8","album_3","artista_2")
         """
         cursor.execute(insert_songs_query)
 
