@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App</title>
+</head>
+<body>
+    <h1>My Flask App</h1>
+    <button onclick="showTable()">Show Table</button>
+
+    <div id="result"></div>
+
+    <script>
+        function showTable() {
+            fetch('/show_all')
+                .then(response => response.json())
+                .then(data => {
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = '<h2>Table Content:</h2>';
+                    data.forEach(row => {
+                        resultDiv.innerHTML += `<p>${JSON.stringify(row)}</p>`;
+                    });
+                });
+        }
+    </script>
+</body>
+</html>

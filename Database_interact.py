@@ -41,7 +41,9 @@ def set_table(name):
     print("Saved new working table")
 
 def interact(userQuery, userValues = None):
-    '''Executes the desired query in the database'''
+    '''
+    Executes the desired query in the database
+    '''
     try:
         with connection.cursor() as cursor:
             
@@ -56,16 +58,35 @@ def interact(userQuery, userValues = None):
     finally:
             connection.close()
 
-
 def show_all():
-    '''Shows the hole table'''
-    show_table = f"""
+    '''
+    Shows the whole table
+    '''
+    show_table_query = f"""
         SELECT * FROM {get_table()}
         """
-    interact(show_table)
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(show_table_query)
+            rows = cursor.fetchall()
+            return rows
+    finally:
+        connection.close()
+
+
+#def show_all():
+#    '''
+#    Shows the hole table
+#    '''
+#    show_table = f"""
+#        SELECT * FROM {get_table()}
+#        """
+#    return interact(show_table)
         
 def add_song_to_db(args):
-    '''Adds a song to the table'''
+    '''
+    Adds a song to the table
+    '''
 
     insert_song = f"""
         INSERT INTO {get_table()} (song_name, album_name, artist_name) 
@@ -144,184 +165,4 @@ def update_song_by(kwargs):
         update_song += "WHERE" + " " + " AND ".join(conditions)
 
     interact(update_song, values)
-    
-###
-###def show_all():
-###    '''
-###    Shows the hole table
-###    '''
-###    try:
-###        with connection.cursor() as cursor:
-###
-###            show_table = f"""
-###            SELECT * FROM {get_table()}
-###            """
-###
-###            cursor.execute(show_table)
-###            rows = cursor.fetchall()
-###            for row in rows:
-###                print(row)
-###    
-###        connection.commit()
-###
-###    finally:
-###            connection.close()
-###
-###def add_song_to_db(args):
-###    '''
-###    Adds a song to the table
-###    '''
-###    try:
-###        with connection.cursor() as cursor:
-###
-###            insert_song = f"""
-###            INSERT INTO {get_table()} (song_name, album_name, artist_name)
-###            VALUES (%s, %s, %s)
-###            """
-###
-###            cursor.execute(insert_song, args)
-###    
-###            select_all_songs_query = "SELECT * FROM songs"
-###            cursor.execute(select_all_songs_query)
-###
-###        
-###            rows = cursor.fetchall()
-###            for row in rows:
-###                print(row)
-###    
-###        connection.commit()
-###
-###    finally:
-###            connection.close()
-###
-###
-###def search_song_by(kwargs):
-###
-###    try:
-###        with connection.cursor() as cursor:
-###
-###            search_song = f"SELECT * FROM {get_table()} WHERE"
-###            conditions = []
-###            values = []
-###
-###            if kwargs["song"]:
-###                conditions.append("song_name = %s")
-###                values.append(kwargs["song"])
-###            if kwargs["album"]:
-###                conditions.append("album_name = %s")
-###                values.append(kwargs["album"])
-###            if kwargs["artist"]:
-###                conditions.append("artist_name = %s")
-###                values.append(kwargs["artist"])
-###
-###            if conditions:
-###                search_song += " " + " AND ".join(conditions)
-###
-###            cursor.execute(search_song, tuple(values))
-###        
-###            rows = cursor.fetchall()
-###            for row in rows:
-###                print(row)
-###    
-###        connection.commit()
-###
-###    finally:
-###            connection.close()
-###
-###
-###
-###def delete_song_by(kwargs):
-###
-###    try:
-###        with connection.cursor() as cursor:
-###
-###            delete_song = f"DELETE FROM {get_table()} WHERE"
-###            conditions = []
-###            values = []
-###
-###            if kwargs["song"]:
-###                conditions.append("song_name = %s")
-###                values.append(kwargs["song"])
-###            if kwargs["album"]:
-###                conditions.append("album_name = %s")
-###                values.append(kwargs["album"])
-###            if kwargs["artist"]:
-###                conditions.append("artist_name = %s")
-###                values.append(kwargs["artist"])
-###
-###            if conditions:
-###                delete_song += " " + " AND ".join(conditions)
-###
-###            cursor.execute(delete_song, tuple(values))
-###        
-###            rows = cursor.fetchall()
-###            for row in rows:
-###                print(row)
-###    
-###        connection.commit()
-###
-###    finally:
-###            connection.close()
-###
-###
-###
-###def update_song_by(kwargs):
-###
-###    try:
-###        with connection.cursor() as cursor:
-###
-###            update_song = f"""UPDATE {get_table()}
-###                              SET"""
-###            conditions = []
-###            values = []
-###
-###            if kwargs["set_song"]:
-###                conditions.append("song_name = %s")
-###                values.append(kwargs["set_song"])
-###            if kwargs["set_album"]:
-###                conditions.append("album_name = %s")
-###                values.append(kwargs["set_album"])
-###            if kwargs["set_artist"]:
-###                conditions.append("artist_name = %s")
-###                values.append(kwargs["set_artist"])
-###
-###            if conditions:
-###                update_song += " " + " , ".join(conditions) 
-###            
-###            conditions = []
-###
-###            if kwargs["song"]:
-###                conditions.append("song_name = %s")
-###                values.append(kwargs["song"])
-###            if kwargs["album"]:
-###                conditions.append("album_name = %s")
-###                values.append(kwargs["album"])
-###            if kwargs["artist"]:
-###                conditions.append("artist_name = %s")
-###                values.append(kwargs["artist"])
-###            
-###            if conditions:
-###                update_song += "WHERE" + " " + " AND ".join(conditions)    
-###
-###            cursor.execute(update_song, tuple(values))
-###            select_all_songs_query = "SELECT * FROM songs"
-###            cursor.execute(select_all_songs_query)
-###        
-###            rows = cursor.fetchall()
-###            for row in rows:
-###                print(row)
-###    
-###        connection.commit()
-###
-###    finally:
-###            connection.close()
-
-
-
-
-    
-    
-    
-
-    
     

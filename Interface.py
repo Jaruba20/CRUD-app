@@ -6,7 +6,7 @@ def set_table(table_name):
     send.set_table(table_name)
 
 def show_all():
-    send.show_all()
+    return send.show_all()
 
 def add_song_to_db(*args):
     send.add_song_to_db(args)
