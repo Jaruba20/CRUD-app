@@ -26,28 +26,35 @@ try:
     # Create a cursor object to execute SQL queries
     with connection.cursor() as cursor:
 
+        '''delete_table = 'DROP TABLE  songs'
+
+        cursor.execute(delete_table)'''
+
+
         # Example query: Create a table
         create_table_query = """
         CREATE TABLE IF NOT EXISTS songs (
             song_id INT PRIMARY KEY AUTO_INCREMENT,
             song_name VARCHAR(255),
             album_name VARCHAR(255),
-            artist_name VARCHAR(255)
+            artist_name VARCHAR(255),
+            genre VARCHAR(255),
+            release_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         """
         cursor.execute(create_table_query)
 
         # Example query: Insert a new song
         insert_songs_query = """
-        INSERT INTO songs (song_name, album_name, artist_name)
-        VALUES ("cancion_1","album_1","artista_1"),
-               ("cancion_2","album_1","artista_1"),
-               ("cancion_3","album_1","artista_1"),
-               ("cancion_4","album_1","artista_1"),
-               ("cancion_5","album_2","artista_1"),
-               ("cancion_6","album_2","artista_1"),
-               ("cancion_7","album_3","artista_2"),
-               ("cancion_8","album_3","artista_2")
+        INSERT INTO songs (song_name, album_name, artist_name, genre)
+        VALUES ("cancion_1","album_1","artista_1", "Rock"),
+               ("cancion_2","album_1","artista_1", "Rock"),
+               ("cancion_3","album_1","artista_1", "Pop"),
+               ("cancion_4","album_1","artista_1", "Country"),
+               ("cancion_5","album_2","artista_1", "Country"),
+               ("cancion_6","album_2","artista_1", "House"),
+               ("cancion_7","album_3","artista_2", "Classical Music"),
+               ("cancion_8","album_3","artista_2", "Techno")
         """
         cursor.execute(insert_songs_query)
 
