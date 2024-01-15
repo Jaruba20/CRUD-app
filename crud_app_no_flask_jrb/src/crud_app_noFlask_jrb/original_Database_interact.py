@@ -1,5 +1,6 @@
-import pymysql
 import configparser
+
+import pymysql
 import pandas as pd
 
 cfg = "example.cfg"
