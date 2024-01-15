@@ -2,7 +2,7 @@ import pymysql
 import configparser
 import pandas as pd
 
-cfg = "original.cfg"
+cfg = "example.cfg"
 config = configparser.ConfigParser()
 config.read(cfg)
 
