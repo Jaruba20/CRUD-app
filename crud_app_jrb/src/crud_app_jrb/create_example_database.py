@@ -18,18 +18,16 @@ connection = pymysql.connect(
     password=password,
     port=port,
     database=database,
-    cursorclass=pymysql.cursors.DictCursor  # Use DictCursor for fetching results as dictionaries
+    cursorclass=pymysql.cursors.DictCursor,  # Use DictCursor for fetching results as dictionaries
 )
 
 
 try:
     # Create a cursor object to execute SQL queries
     with connection.cursor() as cursor:
+        delete_table = 'DROP TABLE  songs'
 
-        '''delete_table = 'DROP TABLE  songs'
-
-        cursor.execute(delete_table)'''
-
+        cursor.execute(delete_table)
 
         # Example query: Create a table
         create_table_query = """

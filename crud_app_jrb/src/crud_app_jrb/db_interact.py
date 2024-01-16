@@ -1,9 +1,12 @@
 import configparser
+import os
 
-import pymysql
 import pandas as pd
+import pymysql
 
-cfg = "example.cfg"
+
+
+cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")
 config = configparser.ConfigParser()
 config.read(cfg)
 
@@ -20,69 +23,73 @@ connection = pymysql.connect(
     password=config.get("CONNECTION", "password"),
     port=int(config.get("CONNECTION", "port")),
     database=config.get("CONNECTION", "database"),
-    cursorclass=pymysql.cursors.DictCursor  # Use DictCursor for fetching results as dictionaries
+    cursorclass=pymysql.cursors.DictCursor,  # Use DictCursor for fetching results as dictionaries
 )
 
 TABLE_NAME = config.get("DATABASE", "table")
 
+
 # HACE FALTA EL GETTER? LO HAGO POR SI DURANTE LA EJECUCIÓN LO HE CAMBIADO CON set_table(), Y LO TENGO QUE VOLVER A LLAMAR ANTES DE CERRAR EL PROGRAMA
 # NO SÉ SI SE VUELVE A EJECUTAR EL config.get DE ARRIBA O NO. ENTIENDO QUE NO.
 def get_table():
-    config.read(cfg) #VER SI ME HACE FALTA ESTO O NO
+    config.read(cfg)  # VER SI ME HACE FALTA ESTO O NO
     TABLE_NAME = config.get("DATABASE", "table")
     return TABLE_NAME
 
+
 def set_table(name):
-    '''
+    """
     Changes the working table in the cfg file.
-    '''
+    """
     TABLE_NAME = config.set("DATABASE", "table", name)
     with open(cfg, "w") as config_file:
         config.write(config_file)
-    
+
     print("Saved new working table")
 
-def interact(userQuery, userValues = None):
-    '''Executes the desired query in the database'''
+
+def interact(userQuery, userValues=None):
+    """Executes the desired query in the database"""
     try:
         with connection.cursor() as cursor:
-            
             cursor.execute(userQuery, userValues)
 
             rows = cursor.fetchall()
-            
+
             if not rows:
                 print("No results to display")
                 return
-            
+
             df = pd.DataFrame.from_dict(rows)
             df.set_index("song_id", inplace=True)
             print(df)
 
             connection.commit()
-            
-            '''for row in rows:
-                print(row)'''
+
+            """for row in rows:
+                print(row)"""
 
     finally:
-            connection.close()
+        connection.close()
 
-#def user_query(query, number):
+
+# def user_query(query, number):
 def user_query(query):
-    '''Sends to execute a query introduced by the user'''
-    #return interact(query, (int(number),))
+    """Sends to execute a query introduced by the user"""
+    # return interact(query, (int(number),))
     return interact(query)
 
 
 def show_all():
-    '''Shows the hole table'''
+    """Shows the hole table"""
     show_table = f"""
         SELECT * FROM {get_table()}
         """
     return interact(show_table)
-        
+
+
 def add_song_to_db(args):
-    '''Adds a song to the table'''
+    """Adds a song to the table"""
 
     insert_song = f"""
         INSERT INTO {get_table()} (song_name, album_name, artist_name) 
@@ -156,8 +163,8 @@ def update_song_by(kwargs):
         conditions.append("genre = %s")
         values.append(kwargs["set_genre"])
     if conditions:
-        update_song += " " + " , ".join(conditions) 
-    
+        update_song += " " + " , ".join(conditions)
+
     conditions = []
     if kwargs["song"]:
         conditions.append("song_name = %s")
@@ -171,9 +178,8 @@ def update_song_by(kwargs):
     if kwargs["genre"]:
         conditions.append("genre = %s")
         values.append(kwargs["genre"])
-    
+
     if conditions:
         update_song += "WHERE" + " " + " AND ".join(conditions)
 
     interact(update_song, values)
-    
