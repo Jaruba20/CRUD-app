@@ -31,10 +31,10 @@ TABLE_NAME = config.get("DATABASE", "table")
 
 # HACE FALTA EL GETTER? LO HAGO POR SI DURANTE LA EJECUCIÓN LO HE CAMBIADO CON set_table(), Y LO TENGO QUE VOLVER A LLAMAR ANTES DE CERRAR EL PROGRAMA
 # NO SÉ SI SE VUELVE A EJECUTAR EL config.get DE ARRIBA O NO. ENTIENDO QUE NO.
-def get_table():
-    config.read(cfg)  # VER SI ME HACE FALTA ESTO O NO
+'''def get_table():
+    #config.read(cfg)  
     TABLE_NAME = config.get("DATABASE", "table")
-    return TABLE_NAME
+    return TABLE_NAME'''
 
 
 def set_table(name):
