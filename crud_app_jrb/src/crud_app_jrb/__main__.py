@@ -9,27 +9,27 @@ def set_table(table_name):
 
 def user_query(query):
     # send.user_query(args[0], args[1])
-    send.user_query(query)
+    return send.user_query(query)
 
 
 def show_all():
-    send.show_all()
+    return send.show_all()
 
 
 def add_song_to_db(*args):
-    send.add_song_to_db(args)
+    return send.add_song_to_db(args)
 
 
 def search_song_by(**kwargs):
-    send.search_song_by(kwargs)
+    return send.search_song_by(kwargs)
 
 
 def delete_song_by(**kwargs):
-    send.delete_song_by(kwargs)
+    return send.delete_song_by(kwargs)
 
 
 def update_song_by(**kwargs):
-    send.update_song_by(kwargs)
+    return send.update_song_by(kwargs)
 
 
 

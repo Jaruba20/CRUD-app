@@ -5,10 +5,11 @@ import pandas as pd
 import pymysql
 
 
-
-cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")
-config = configparser.ConfigParser()
-config.read(cfg)
+def get_cfg():
+    cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")
+    config = configparser.ConfigParser()
+    config.read(cfg)
+    return config
 
 
 # Requires a Mysql database
@@ -17,14 +18,15 @@ config.read(cfg)
 
 
 # Create a connection to MySQL using pymysql
-connection = pymysql.connect(
-    host=config.get("CONNECTION", "hostname"),
-    user=config.get("CONNECTION", "username"),
-    password=config.get("CONNECTION", "password"),
-    port=int(config.get("CONNECTION", "port")),
-    database=config.get("CONNECTION", "database"),
-    cursorclass=pymysql.cursors.DictCursor,  # Use DictCursor for fetching results as dictionaries
-)
+def connect(config):
+    return pymysql.connect(
+        host=config.get("CONNECTION", "hostname"),
+        user=config.get("CONNECTION", "username"),
+        password=config.get("CONNECTION", "password"),
+        port=int(config.get("CONNECTION", "port")),
+        database=config.get("CONNECTION", "database"),
+        cursorclass=pymysql.cursors.DictCursor,  # Use DictCursor for fetching results as dictionaries
+    )
 
 TABLE_NAME = config.get("DATABASE", "table")
 
@@ -71,6 +73,7 @@ def interact(userQuery, userValues=None):
 
     finally:
         connection.close()
+        return df
 
 
 # def user_query(query, number):
@@ -83,7 +86,7 @@ def user_query(query):
 def show_all():
     """Shows the hole table"""
     show_table = f"""
-        SELECT * FROM {get_table()}
+        SELECT * FROM {config.get("DATABASE", "table")}
         """
     return interact(show_table)
 
@@ -92,11 +95,12 @@ def add_song_to_db(args):
     """Adds a song to the table"""
 
     insert_song = f"""
-        INSERT INTO {get_table()} (song_name, album_name, artist_name) 
+        INSERT INTO {config.get("DATABASE", "table")} (song_name, album_name, artist_name) 
         VALUES (%s, %s, %s)
         """
-    interact(insert_song, args)
+    return interact(insert_song, args)
 
+#def search_song_by(song=None, album="")
 
 def search_song_by(kwargs):
     search_song = f"SELECT * FROM {get_table()} WHERE"

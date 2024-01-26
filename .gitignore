@@ -3,3 +3,4 @@ __pycache__
 .cfg
 .ruff_cache
 .gitignore
+crud_app_jrb.egg-info
