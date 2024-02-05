@@ -107,10 +107,6 @@ def main():
     args = parser.parse_args()
 
     match args.command:
-        # case "login":
-        #    login(user=args.user)
-        # case "logout":
-        #    logout()
         case "set_table":
             set_table(args.name)
         case "entry_query":

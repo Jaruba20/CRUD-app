@@ -1,15 +1,16 @@
 import configparser
 import os
+from crud_app_jrb.dashboard import get_connection
 
 import pandas as pd
 import pymysql
 
 
-def get_cfg():
+'''def get_cfg():
     cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")
     config = configparser.ConfigParser()
     config.read(cfg)
-    return config
+    return config'''
 
 
 # Requires a Mysql database
@@ -18,7 +19,7 @@ def get_cfg():
 
 
 # Create a connection to MySQL using pymysql
-def connect(config):
+'''def connect(config):
     return pymysql.connect(
         host=config.get("CONNECTION", "hostname"),
         user=config.get("CONNECTION", "username"),
@@ -26,7 +27,7 @@ def connect(config):
         port=int(config.get("CONNECTION", "port")),
         database=config.get("CONNECTION", "database"),
         cursorclass=pymysql.cursors.DictCursor,  # Use DictCursor for fetching results as dictionaries
-    )
+    )'''
 
 TABLE_NAME = config.get("DATABASE", "table")
 
@@ -37,6 +38,10 @@ TABLE_NAME = config.get("DATABASE", "table")
     #config.read(cfg)  
     TABLE_NAME = config.get("DATABASE", "table")
     return TABLE_NAME'''
+
+'''def get_all_tables():
+    query = "SHOW TABLES"
+    interact(query)'''
 
 
 def set_table(name):
