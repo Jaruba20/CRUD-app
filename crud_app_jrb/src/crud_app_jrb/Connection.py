@@ -3,8 +3,12 @@ import os
 import configparser
 
 class Connection:
-    def __init__(self, config):
+    def __init__(self, config = None):
+        if config == None:
+            config = self.get_cfg()
+
         self.config = config
+        self.connection = self.connect(self.config)
 
 
     def connect(config):
@@ -18,7 +22,11 @@ class Connection:
         )
     
     def get_cfg(cfg):
-        #cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")
+        cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")
         config = configparser.ConfigParser()
         config.read(cfg)
         return config
+    
+
+    #METER TODOS LOS MÉTODOS DE INTERACT AQUÍ
+    #FUNCIÓN INTERACT LO PUEDO PONER PRIVADO CON __

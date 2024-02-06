@@ -7,9 +7,12 @@ import os
 from crud_app_jrb.Connection import Connection
 
 @st.cache_resource
-def connect(cfg = os.getenv("CRUD_APP_CONFIG_FILE", default=".cfg")):
-    connection = Connection(cfg)
+def connect():
+    connection = Connection()
+    return connection
 
+# GLOBAL VARIABLES
+DB_CONNECTION: Connection = connect()
 
 
 st.title("CRUD APP")
